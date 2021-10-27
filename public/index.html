@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>css-select, directly imported</h1>
+    <div id="css-select"></div>
+    <h1>css-select, when called from node-html-parser</h1>
+    <div id="node-html-parser"></div>
+    <script type="module">
+      import { selectAll, selectOne } from "css-select";
+      document.getElementById("css-select").innerText = JSON.stringify({
+        selectAll: typeof selectAll,
+        selectOne: typeof selectOne,
+      });
+
+      import parse from "node-html-parser";
+      const nodes = parse("<html><body>hello, world</body></html>");
+
+      try {
+        const result = nodes.querySelectorAll("body");
+        document.getElementById("node-html-parser").innerText =
+          "Result: " + result.toString();
+      } catch (err) {
+        document.getElementById("node-html-parser").innerText = err.toString();
+      }
+    </script>
+  </body>
+</html>
